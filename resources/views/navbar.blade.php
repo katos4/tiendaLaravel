@@ -9,7 +9,7 @@
                 <img src="http://localhost/tiendaLaravel/public/imagenes/logoVerde.png" width="120px" heigth="50px"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{ url('/') }}">Inic5io</a>
+                            <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                             
                         </li>
                         <li class="nav-item dropdown">
