@@ -58,6 +58,13 @@ class controladorCarrito extends Controller
         return back();
     }
 
+//MOSTRAR FORMULARIO FACTURACION
+
+public function showFacturacion(){
+    $tablaCategorias = Categoria::get();
+    return view('/facturacion',  ['tablaCategorias' => $tablaCategorias]);
+}
+
 
 //----
 }

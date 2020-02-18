@@ -16,10 +16,10 @@ Route::get('detallesProducto', function(){
 });
 
 //LOGIN
-Route::get('login','UserController@mostrarLogin');
+/*Route::get('login','UserController@mostrarLogin');
 Route::post('login','controladorLogin@login', function(){
     return view('master');
-})->name('login.inicioSesion');
+})->name('login.inicioSesion');*/ 
 
 
 //Carrito de la compra
@@ -35,29 +35,40 @@ Route::post('/actualizar', 'controladorCarrito@update')->name('update.carrito');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //productos de la categoria menu healthy
-Route::get('/healthy', 'controladorProductos@menuHealthy');
+//Route::get('/healthy', 'controladorProductos@menuHealthy');
 
 //productos de la categoria menu executive
-Route::get('/executive', 'controladorProductos@menuExecutive');
+//Route::get('/executive', 'controladorProductos@menuExecutive');
 
 
 //mostrar los productos de una determinada categoria
-Route::get('/prueba', 'controladorProductos@mostrarProductos');
+//Route::get('/prueba', 'controladorProductos@mostrarProductos');
 
+
+//Auth::routes();
+
+ // Authentication Routes...
+ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+ Route::post('login', 'Auth\LoginController@login');
+ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+ // Registration Routes...
+ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+ Route::post('register', 'Auth\RegisterController@register');
+
+ // Password Reset Routes...
+ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+//FACTURACION
+
+Route::get('/facturacion', 'controladorCarrito@showFacturacion')->name('mostrarFacturacion');
+Route::post('/crearPedido', 'controladorPedidos@addPedido')->name('crearPedido');

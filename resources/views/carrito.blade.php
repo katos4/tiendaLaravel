@@ -71,8 +71,23 @@
                       
                     </div>
                   </div>
+                  @if(Cart::instance('default')->count()>0)
 
-                  <button class="btn btn-primary btn-lg">Realizar pedido</button>
+
+                    @if(Auth::guest()) 
+                    <form action="{{ route('login') }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-primary btn-lg">Iniciar sesion</button>
+                        <form>
+
+                        @else
+                   
+                    <form action="{{ route('mostrarFacturacion') }}">
+                        {{ csrf_field() }}
+                         <button class="btn btn-primary btn-lg">Realizar pedido</button>
+                    <form>
+                        @endif
+                  @endif
             </div>
             
 

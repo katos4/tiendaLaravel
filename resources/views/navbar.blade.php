@@ -9,7 +9,7 @@
                 <img src="http://localhost/tiendaLaravel/public/imagenes/logoVerde.png" width="120px" heigth="50px"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{ url('/') }}">Inicioo</a>
+                            <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                             
                         </li>
                         <li class="nav-item dropdown">
@@ -42,7 +42,18 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acceso usuario</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{url('/login')}}">Iniciar sesión</a>
+                                @guest
+                                <a class="dropdown-item" href="{{url('/home')}}">Iniciar sesión</a>
+                                @else
+                                <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Cerrar sesion
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                @endguest
                             </div>
                         </li>
                     </ul>
