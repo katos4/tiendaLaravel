@@ -1,7 +1,7 @@
-Hola, <strong>{{ $name }}</strong>.
+Hola, <strong>{{ $nombre_user }}</strong>.
  
 <p>Nombre: {{ $nombre_user }}</p>
 
 <p>Direcsao: {{ $direccion }}</p>
 
-<p>Paga morosa: -> {{$total}}</p>
+<p>Paga moroso: -> {{$total}}</p>

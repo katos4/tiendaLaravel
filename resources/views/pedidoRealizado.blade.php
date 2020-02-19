@@ -9,11 +9,11 @@
 
   <div class="col-lg-12 mt-3">
 
-  <p>Total pagado: {{ $arrayDatos['total'] }}</p>
-  <p>Nombre: {{ $arrayDatos['nombre_user'] }}</p>
-  <p>Direccion de facturación: {{ $arrayDatos['direccion'] }}</p>
-  <p>Email: {{ $arrayDatos['email_user'] }}</p>
-  
+    <p>Total pagado: {{ $arrayDatos['total'] }}</p>
+    <p>Nombre: {{ $arrayDatos['nombre_user'] }}</p>
+    <p>Direccion de facturación: {{ $arrayDatos['direccion'] }}</p>
+    <p>Email: {{ $arrayDatos['email_user'] }}</p>
+    
 
   </div> 
 
@@ -23,6 +23,7 @@
             <button class="btn btn-primary " type="submit">Aceptar</button>
         </form> 
     </div>
+
 
 </div>
 
