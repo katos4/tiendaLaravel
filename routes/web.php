@@ -71,4 +71,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //FACTURACION
 
 Route::get('/facturacion', 'controladorCarrito@showFacturacion')->name('mostrarFacturacion');
-Route::post('/crearPedido', 'controladorPedidos@addPedido')->name('crearPedido');
+Route::post('/crearPedido', 'controladorPedidos@crearPedido')->name('crearPedido');
+//Route::post('/resumenPedido', 'controladorPedidos@resumen')->name('resumenPedido');
+Route::post('/pedidoRealizado', 'controladorPedidos@pedidoRealizado')->name('pedidoRealizado');
+Route::post('/aceptar', 'controladorPedidos@aceptar')->name('aceptar');

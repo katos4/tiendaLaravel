@@ -24,9 +24,6 @@
                             </div>
                             
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/prueba') }}">Productos</a>
-                        </li>
                        
                     </ul>
                     <ul class="navbar-nav">
@@ -39,22 +36,20 @@
                                 </span>Carrito
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acceso usuario</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @guest
-                                <a class="dropdown-item" href="{{url('/home')}}">Iniciar sesión</a>
+                        <li class="nav-item">
+                            @guest
+                                <a class="nav-link" href="{{url('/home')}}"><i class="fas fa-user"></i>Iniciar sesión</a>
                                 @else
-                                <a href="{{ route('logout') }}"
+                                <a class="nav-link" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Cerrar sesion
-                                        </a>
+                                          
+                                            <i class="fas fa-user-slash"></i>Cerrar sesion</a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                                @endguest
-                            </div>
+                            @endguest
+                            
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">

@@ -5,26 +5,26 @@
 <div class="row mt-4">
 <form class="needs-validation" method="POST" action="{{route('crearPedido') }}"  novalidate>
     {{ csrf_field() }}
-            <div class="form-row">
-                <div class="col-md-6 mb-6">
+           
+                <div class="col-lg-12">
                     <label for="validationCustom01">Direccion de facturación</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" required>
                     <div class="invalid-feedback">
                     ¡Debes introducir una direccion!
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-6">
+            
+           
+                <div class="col-lg-12">
                     <label for="validationCustom05">Codigo postal</label>
                     <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" required>
                     <div class="invalid-feedback">
                         ¡Debes introducir un codigo postal!
                     </div>
                 </div>
-            </div>
+            
             <div class="form-group">
-                <div class="form-check">
+              <!--  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                     <label class="form-check-label" for="invalidCheck">
                     Aceptar los términos y condiciones
@@ -32,14 +32,14 @@
                     <div class="invalid-feedback">
                     Debes aceptar los terminos y condiciones
                     </div>
-                </div>
+                </div> -->
             </div>
 
         <input type="text" id="userName" name="userName" value="{{auth()->user()->name}}" hidden>
         <input type="text" id="userEmail" name="userEmail" value="{{auth()->user()->email}}" hidden>
         <input type="text" id="userId" name="userId" value="{{auth()->id()}}" hidden>
         
-        <button class="btn btn-primary" type="submit">Submit form</button>
+        <button class="btn btn-primary " type="submit">Continuar</button>
         </form>
 </div>
 
