@@ -7,6 +7,7 @@ use App\Pedidos;
 use App\PedidoProducto;
 use Cart;
 use Mail;
+use Barryvdh\DomPDF\Facade as PDF;
 
 use Illuminate\Http\Request;
 
@@ -24,14 +25,19 @@ class controladorPedidos extends Controller
             "codigo" =>$res->codigoPostal,
             "nombre_user" => $res->userName, 
             "email_user" => $res->userEmail,
-            "total" => $total
+            "total" => $total,
+            "contenidoCarrito" => Cart::content()
         ];
 
-        //envia email
-          Mail::send('mail', $arrayDatos, function($message) {
+        //envia email y adjunta PDF
+          $pdf = PDF::loadView('mail', $arrayDatos);
+
+          Mail::send('mail', $arrayDatos, function($message) use ($pdf) {
+            $message->from('gregfdez077@gmail.com','Resumen del pedido');
             $message->to('gregoharriero@gmail.com', 'Grego')
                     ->subject('Factura pedido MyTotem');
-            $message->from('gregfdez077@gmail.com','Resumen del pedido');
+            $message -> attachData($pdf->output(), 'Resumen_Pedido.pdf');
+            
             });
        
         //inserta los datos del pedido en la tabla pedidos
