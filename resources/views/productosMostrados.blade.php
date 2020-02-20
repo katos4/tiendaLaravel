@@ -25,9 +25,14 @@
 
                     </div>
                 @endforeach
-               
+                <div class="col-lg-12">
+
+                    {{$productosH->links()}}
+                </div>
+                
         </div>
-        {{ $productosH->links() }}
+
+        
     
 
 

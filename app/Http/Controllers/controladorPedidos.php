@@ -41,18 +41,19 @@ class controladorPedidos extends Controller
             });
        
         //inserta los datos del pedido en la tabla pedidos
-        Pedidos::insert(["user_id" => $res->userId, "fecha_realizacion" =>$fecha, "estado"=>1, "direccion" =>$res->direccion, "codigo" =>$res->codigoPostal, "nombre_user" => $res->userName, "email_user" => $res->userEmail ]);
-        
+       $pedido = Pedidos::create(["user_id" => $res->userId, "fecha_realizacion" =>$fecha, "estado"=>1, "direccion" =>$res->direccion, "codigo" =>$res->codigoPostal, "nombre_user" => $res->userName, "email_user" => $res->userEmail ]);
+       
+       $id=$pedido->id; 
+       
         /*coge el id del ultimo pedido insertado, saca los datos de cada item del carrito y los inserta
         en la tabla pedido_has_producto*/
-        $idPedido = Pedidos::where('email_user', $res->userEmail)->first()->id_pedido;
-        
+      
         foreach(Cart::content() as $item){
            
-            PedidoProducto::insert(["cantidad" =>Cart::get($item->rowId)->qty, 
+            PedidoProducto::create(["cantidad" =>Cart::get($item->rowId)->qty, 
             "precio" =>Cart::get($item->rowId)->price, 
             "descuento"=>0, 
-            "pedido_id"=>$idPedido, 
+            "pedido_id"=>$id, 
             "productos_id" =>Cart::get( $item->rowId)->id ]);
           }
     
