@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'BootstrapComponents' => Appstract\BootstrapComponents\BootstrapComponentsFacade::class,
+        'SoftDeletes' => Illuminate\Database\Eloquent\SoftDeletes::class,
     ],
 
 ];

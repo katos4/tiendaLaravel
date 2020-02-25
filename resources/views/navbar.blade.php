@@ -36,26 +36,37 @@
                                 </span>Carrito
                             </a>
                         </li>
+                  
+
                         <li class="nav-item">
                             @guest
-                                <a class="nav-link" href="{{url('/home')}}"><i class="fas fa-user"></i>Iniciar sesión</a>
-                                @else
-                                <a class="nav-link" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                          
-                                            <i class="fas fa-user-slash"></i>Cerrar sesion</a>
+                            <a class="nav-link" href="{{url('/home')}}"><i class="fas fa-user"></i>Iniciar sesión</a>
+                            @else
+
+                            <div class="btn-group">
+                                    <a class="nav-link  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hola, <strong>{{Auth()->user()->name}}</strong></a>
+                                    
+                                    <div class="dropdown-menu dropdown-menu-right">
+
+                                    <a class="nav-link" href="{{ route('verPerfil') }}" ><i class="fas fa-address-card"></i>Mi perfil</a>
+
+
+                                        <a class="nav-link" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    
+                                        <i class="fas fa-user-slash"></i>Cerrar sesion</a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                            @endguest
-                            
+
+                                    </div>
+
+                              </div>
+                              @endguest
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img src="http://localhost/tiendaLaravel/public/imagenes/lupa.png" width="20px" heigth="20px"/></button>
-                    </form>
+                   
             </nav>
         </div>
     </div>
