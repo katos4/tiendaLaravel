@@ -1,71 +1,64 @@
 @extends('master')
 @section('content')
 
-
 <div class="row mt-4">
-<form class="needs-validation" method="POST" action="{{route('crearPedido') }}"  novalidate>
-    {{ csrf_field() }}
-           
-                <div class="col-lg-12">
-                    <label for="validationCustom01">Direccion de facturación</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" required>
-                    <div class="invalid-feedback">
-                    ¡Debes introducir una direccion!
-                    </div>
-                </div>
-            
-           
-                <div class="col-lg-12">
-                    <label for="validationCustom05">Codigo postal</label>
-                    <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" required>
-                    <div class="invalid-feedback">
-                        ¡Debes introducir un codigo postal!
-                    </div>
-                </div>
-            
-            <div class="form-group">
-              <!--  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                    <label class="form-check-label" for="invalidCheck">
-                    Aceptar los términos y condiciones
-                    </label>
-                    <div class="invalid-feedback">
-                    Debes aceptar los terminos y condiciones
-                    </div>
-                </div> -->
-            </div>
 
-        <input type="text" id="userName" name="userName" value="{{auth()->user()->name}}" hidden>
-        <input type="text" id="userEmail" name="userEmail" value="{{auth()->user()->email}}" hidden>
-        <input type="text" id="userId" name="userId" value="{{auth()->id()}}" hidden>
+    <div class="col-md-7">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio/Unidad</th> 
+            <th scope="col">Cantidad</th>                           
+        </tr>
+        </thead>
+        @foreach(Cart::content() as $item)
+                    
+          <tbody>
+          <tr>
+                <td>{{$item->name}}</td>
+                <td>{{$item->price}}</td>
+                <td>{{$item->qty}}</td>
+          </tr>
+          
+          </tbody>
+          
+        @endforeach
+      </table>
+    <span><b>Total: </b>{{Cart::total()}} €</span>
+    </div>
+
+    <div class="col-md-5">
+      <form class="needs-validation" method="POST" action="{{route('crearPedido') }}"  novalidate>
+        {{ csrf_field() }}
         
-        <button class="btn btn-primary " type="submit">Continuar</button>
-        </form>
+      <div class="col-lg-12">
+          <label for="validationCustom01">Direccion de facturación</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" required>
+      </div>
+          
+      <div class="col-lg-12">
+          <label for="validationCustom05">Codigo postal</label>
+          <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" required> 
+      </div>
+          
+      <input type="text" id="userName" name="userName" value="{{auth()->user()->name}}" hidden>
+      <input type="text" id="userEmail" name="userEmail" value="{{auth()->user()->email}}" hidden>
+      <input type="text" id="userId" name="userId" value="{{auth()->id()}}" hidden>
+      
+      <br><button class="btn btn-primary " type="submit">Pagar y confirmar</button>
+      
+      
+  </form>
+    </div>
+
 </div>
 
+<div class="row mt-4">
+    <div class="col-md-4 col-md-offset-4">
+       
+      </div>
+</div>
 
-
-<!-- JAVASCRIPT -->
-  <script>
-     
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-  </script>
 
 @endsection

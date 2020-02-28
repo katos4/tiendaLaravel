@@ -30,9 +30,6 @@ class controladorCarrito extends Controller
             'qty'=>$res->cantidad,
         ]);
 
-        //$detalles->stock -= $res->cantidad;
-        //$detalles->save();
-
         $tablaCategorias = Categoria::get();
         return view('carrito', ['tablaCategorias' => $tablaCategorias]);
        
@@ -52,16 +49,28 @@ class controladorCarrito extends Controller
 
 //ACTUALIZAR
     public function update(Request $res){
-        
         Cart::update($res->id, $res->cantidad);
-
         return back();
     }
+
+//VACIAR CARRITO
+
+    public function vaciar(){
+        Cart::destroy();
+
+        return redirect('/');
+    }
+
+
 
 //MOSTRAR FORMULARIO FACTURACION
 
 public function showFacturacion(){
+
+    //dd(Cart::content());
+
     $tablaCategorias = Categoria::get();
+    
     return view('/facturacion',  ['tablaCategorias' => $tablaCategorias]);
 }
 

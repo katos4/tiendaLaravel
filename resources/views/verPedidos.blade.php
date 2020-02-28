@@ -14,18 +14,36 @@
                                <tr>
                                    <td>Nº pedido</td>
                                    <td>Fecha realización</td>
+                                   <td>Estado</td>
                                </tr>
                            </thead>
                            @foreach($pedido as $ped)
+
+                           
+
                             <tbody>
                               <tr>
                               <td>{{ $ped->id_pedido }}</td>
                                 <td>{{$ped->fecha_realizacion}}</td>
+                                <td>@if($ped->estado==1)
+                                 Enviado
+                                  @elseif($ped->estado==2)
+                                  Cancelado
+                                  @else
+                                  Procesando
+                                 @endif</td>
                               <form method="POST" action="{{ route('facturaPdf') }}">
                                 {{ csrf_field() }}
                                     <input type="hidden" name="pedidoId" id="pedidoId" value="{{$ped->id_pedido}}">
                                     <td><button type="submit">Ver factura</button></td>
                                 </form>
+                                @if($ped->estado==0)
+                              <form method="POST" action="{{route('cancelarPedido')}}">
+                                {{ csrf_field() }}
+                                  <input type="hidden" name="pedidoId" id="pedidoId" value="{{$ped->id_pedido}}">
+                                  <td><button type="submit">Cancelar</button></td>
+                                </form>
+                                @endif
                               </tr>
                             </tbody>
                             @endforeach

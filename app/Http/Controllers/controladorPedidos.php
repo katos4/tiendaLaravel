@@ -26,13 +26,14 @@ class controladorPedidos extends Controller
             "nombre_user" => $res->userName, 
             "email_user" => $res->userEmail,
             "total" => $total,
+            "estado"=>0,
             "contenidoCarrito" => Cart::content()
         ];
 
         //envia email y adjunta PDF
           $pdf = PDF::loadView('mail', $arrayDatos);
 
-          $pdf2 = PDF::loadView('mail', $arrayDatos)->save(storage_path('app/public/') . 'archivo.pdf');
+         // $pdf2 = PDF::loadView('mail', $arrayDatos)->save(storage_path('app/public/') . 'archivo.pdf');
 
           Mail::send('mail', $arrayDatos, function($message) use ($pdf) {
             $message->from('gregfdez077@gmail.com','Resumen del pedido');
@@ -43,7 +44,7 @@ class controladorPedidos extends Controller
             });
        
         //inserta los datos del pedido en la tabla pedidos
-       $pedido = Pedidos::create(["user_id" => $res->userId, "fecha_realizacion" =>$fecha, "estado"=>1, "direccion" =>$res->direccion, "codigo" =>$res->codigoPostal, "nombre_user" => $res->userName, "email_user" => $res->userEmail ]);
+       $pedido = Pedidos::create(["user_id" => $res->userId, "fecha_realizacion" =>$fecha, "direccion" =>$res->direccion, "codigo" =>$res->codigoPostal, "nombre_user" => $res->userName, "email_user" => $res->userEmail ]);
        
         /*coge el id del ultimo pedido insertado, saca los datos de cada item del carrito y los inserta
         en la tabla pedido_has_producto*/
@@ -72,7 +73,12 @@ class controladorPedidos extends Controller
     }
 
    
+public function cancelarPedido(Request $res){
 
+  $pedido = Pedidos::where('id_pedido', $res->pedidoId)->update(['estado'=>2]);
+  return back();
+
+}
 
 
 

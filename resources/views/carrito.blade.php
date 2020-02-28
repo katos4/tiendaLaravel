@@ -3,14 +3,14 @@
 
         <div class="row mt-5">
 
-            <h3 class="col-lg-12">  Vista del carrito calvo </h3>
-        <h6 class="col-lg-12">Tienes {{Cart::count()}} items en el carrito!</h6>
+           
+        <h3 class="col-lg-12">({{Cart::count()}}) Artículos en la cesta</h3>
                 <div class="col-lg-8">
                     <table class="table table-hover">
                         <thead>
                         <tr>
                             <th scope="col">Cantidad</th>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Producto</th>
                             <th scope="col">Precio/Unidad</th>                            
                         </tr>
                         </thead>
@@ -55,10 +55,15 @@
                              
                             </td>
                         </tr>
+            
                         </tbody>
                     
                     @endforeach
+                   
                     </table>
+                    <div class="col-md-2"></div>
+                    <a class="btn btn-outline-danger" href="{{route('vaciarCarrito')}}">Vaciar cesta</a>
+                    <a class="btn btn-outline-info" href="{{route('seguirComprando')}}">Seguir comprando</a>
             </div>   
             <div class="col-lg-4">
                 <div class="card border-0">
@@ -82,7 +87,7 @@
 
                         @else
                    
-                    <form action="{{ route('mostrarFacturacion') }}">
+                    <form method="post" action="{{ route('mostrarFacturacion') }}">
                         {{ csrf_field() }}
                          <button class="btn btn-primary btn-lg">Realizar pedido</button>
                     <form>
