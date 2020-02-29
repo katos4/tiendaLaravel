@@ -25,40 +25,20 @@
           
         @endforeach
       </table>
-    <span><b>Total: </b>{{Cart::total()}} €</span>
+   
+    <a href="{{ route('payment') }}" class="btn btn-warning">
+      Pagar con Paypal<i class="fab fa-paypal"></i>
+  </a>
     </div>
 
     <div class="col-md-5">
-      <form class="needs-validation" method="POST" action="{{route('crearPedido') }}"  novalidate>
-        {{ csrf_field() }}
-        
-      <div class="col-lg-12">
-          <label for="validationCustom01">Direccion de facturación</label>
-          <input type="text" class="form-control" id="direccion" name="direccion" required>
-      </div>
-          
-      <div class="col-lg-12">
-          <label for="validationCustom05">Codigo postal</label>
-          <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" required> 
-      </div>
-          
-      <input type="text" id="userName" name="userName" value="{{auth()->user()->name}}" hidden>
-      <input type="text" id="userEmail" name="userEmail" value="{{auth()->user()->email}}" hidden>
-      <input type="text" id="userId" name="userId" value="{{auth()->id()}}" hidden>
-      
-      <br><button class="btn btn-primary " type="submit">Pagar y confirmar</button>
-      
-      
-  </form>
+      <span><b>Total: </b>{{Cart::subtotal()}} €</span><br>
+      <span>Gastos de envio: 3€</span><br>
     </div>
 
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-4 col-md-offset-4">
-       
-      </div>
-</div>
+
 
 
 @endsection

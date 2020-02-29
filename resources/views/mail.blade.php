@@ -91,7 +91,7 @@
     <span class="letrasColor">TOTAL:</span>  <span><strong>{{$total}} €</strong></span><br><br>
 
     <div>
-        <span class="letrasColor">Método de pago </span><span></span><br>
+        <span class="letrasColor">Método de pago: </span><span>PayPal</span><br>
         <span class="letrasColor">Dirección de envío:</span><span> {{$direccion }} </span><br>
         <span class="letrasColor">Correo electrónico:</span> <span>{{$email_user }} </span><br>
     

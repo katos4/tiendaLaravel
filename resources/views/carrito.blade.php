@@ -70,10 +70,7 @@
                     <div class="card-header">({{Cart::count()}}) Productos</div>
                     <div class="card-body">
                       
-                        <p>Subtotal:{{ Cart::subtotal()}}</p>
-                        <p> IVA(21%): {{ Cart::tax() }}</p>
-                        <p><b>TOTAL: {{ Cart::total() }}<b></p>
-                      
+                        <p>TOTAL:{{ Cart::subtotal()}}</p>
                     </div>
                   </div>
                   @if(Cart::instance('default')->count()>0)

@@ -18,7 +18,7 @@ Route::get('detallesProducto', function(){
 
 
 //Carrito de la compra
-Route::get('/carrito', 'controladorCarrito@verCarrito');
+Route::get('/carrito', 'controladorCarrito@verCarrito')->name('carrito');
 Route::post('/carrito', 'controladorCarrito@addToCart')->name('cart.add');
 Route::delete('/carrito/{id}','controladorCarrito@removeFromCart')->name('cart.remove');
 Route::post('/actualizar', 'controladorCarrito@update')->name('update.carrito');
@@ -52,20 +52,20 @@ Route::get('/seguirComprando', function(){
 //FACTURACION
 
 Route::post('/facturacion', 'controladorCarrito@showFacturacion')->name('mostrarFacturacion');
-Route::post('/crearPedido', 'controladorPedidos@crearPedido')->name('crearPedido');
+//Route::post('/crearPedido', 'controladorPedidos@crearPedido')->name('crearPedido');
 Route::post('/pedidoRealizado', 'controladorPedidos@pedidoRealizado')->name('pedidoRealizado');
 Route::post('/aceptar', 'controladorPedidos@aceptar')->name('aceptar');
 Route::post('cancelarPedido', 'controladorPedidos@cancelarPedido')->name('cancelarPedido');
 
 //PERFIL DEL USUARIO
 
-Route::get('/verPerfil', 'controladorPerfilUser@verPerfil')->name('verPerfil');
-Route::post('/editarDatos', 'controladorPerfilUser@editarDatos')->name('editarDatos');
-Route::get('/verPedidos', 'controladorPerfilUser@verPedidos')->name('verPedidos');
-Route::get('vistaEditar', 'controladorPerfilUser@editarForm')->name('vistaEditar');
-Route::post('/facturaPdf', 'controladorPerfilUser@facturaPDF')->name('facturaPdf');
-Route::post('cambioClave', 'controladorPerfilUser@cambioClave')->name('cambioClave');
-Route::get('/darDeBaja', 'controladorPerfilUser@darBaja')->name('darDeBaja');
+Route::get('/verPerfil', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@verPerfil'])->name('verPerfil');
+Route::post('/editarDatos',['middleware'=>'auth', 'uses' => 'controladorPerfilUser@editarDatos'])->name('editarDatos');
+Route::get('/verPedidos', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@verPedidos'])->name('verPedidos');
+Route::get('/vistaEditar',['middleware'=>'auth', 'uses' => 'controladorPerfilUser@editarForm'])->name('vistaEditar');
+Route::post('/facturaPdf', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@facturaPDF'])->name('facturaPdf');
+Route::post('/cambioClave', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@cambioClave'])->name('cambioClave');
+Route::get('/darDeBaja', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@darBaja'])->name('darDeBaja');
 
 //CONVERSION XML
 
@@ -73,4 +73,14 @@ Route::post('/vista', 'controladorPerfilUser@exportarPedidos')->name('verXML');
 Route::get('/exportarProductos', 'controladorPerfilUser@exportarProductos')->name('exportarProductos');
 
 
+//PAGOS CON PAYPAL
 
+Route::get('payment', array(
+    'as' => 'payment',
+    'uses' => 'PaypalController@postPayment',
+));
+
+Route::get('payment/status', array(
+    'as' => 'payment.status',
+    'uses' => 'PaypalController@getPaymentStatus',
+));

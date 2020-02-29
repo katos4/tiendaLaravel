@@ -16,6 +16,10 @@
     </head>   
     <body  style="padding-top: 3em; overflow-x: hidden;">
     
+        @if(\Session::has('message')) 
+            @include('message')
+        @endif
+
         @include('navbar')
 
         <div class="container-fluid">
