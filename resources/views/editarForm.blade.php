@@ -49,6 +49,7 @@
                 
                 <form action="{{route('cambioClave')}}" method="POST">
                     {{ csrf_field() }}
+                    <span>Contraseña nueva</span>
                 <input type="hidden" name="id" id="id" value="{{Auth()->user()->id}}"/>
                 <input type="password" name="nuevaClave">
                     <button type="submit" class="btn btn-danger">Cambiar</button>

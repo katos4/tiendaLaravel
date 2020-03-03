@@ -35,13 +35,13 @@
                               <form method="POST" action="{{ route('facturaPdf') }}">
                                 {{ csrf_field() }}
                                     <input type="hidden" name="pedidoId" id="pedidoId" value="{{$ped->id_pedido}}">
-                                    <td><button type="submit">Ver factura</button></td>
+                                    <td><button type="submit" style="background: transparent; border:none;"><i class="far fa-file-pdf"></i></button></td>
                                 </form>
                                 @if($ped->estado==0)
                               <form method="POST" action="{{route('cancelarPedido')}}">
                                 {{ csrf_field() }}
                                   <input type="hidden" name="pedidoId" id="pedidoId" value="{{$ped->id_pedido}}">
-                                  <td><button type="submit">Cancelar</button></td>
+                                  <td><button type="submit" style="background: transparent; border:none;"><i class="far fa-window-close"></i></button></td>
                                 </form>
                                 @endif
                               </tr>

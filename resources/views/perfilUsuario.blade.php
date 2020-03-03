@@ -15,7 +15,7 @@
             <a href="{{ route('verPedidos') }}" class="list-group-item list-group-item-action">Ver mis pedidos</a>
             <a href="{{ route('vistaEditar') }}" class="list-group-item list-group-item-action">Editar mis datos</a>
             <a href="{{route('verXML')}}" class="list-group-item list-group-item-action">Exportar en XML</a>
-            <a href="{{route('darDeBaja')}}" class="list-group-item list-group-item-action">Dar de baja</a>
+            <a href="{{route('confirmacionBaja')}}" class="list-group-item list-group-item-action">Dar de baja</a>
             
             
           </ul>

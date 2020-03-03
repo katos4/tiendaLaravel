@@ -45,6 +45,7 @@ class PaypalController extends BaseController{
 		$this->_api_context->setConfig($paypal_conf['settings']);
 	}
  
+	//ENVIA LOS DATOS DE PAGO A LA PAGINA DE PAYPAL
 	public function postPayment(){
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');
@@ -64,7 +65,7 @@ class PaypalController extends BaseController{
 			->setPrice($producto->price);
  
 			$items[] = $item;
-           $subtotal += $producto->qty * $producto->price;
+           $subtotal += $producto->qty * $producto->price; 
            
 		}
  
@@ -131,12 +132,13 @@ class PaypalController extends BaseController{
 	}
  
 
+	//RECIBE LA RESPUESTA DE PAYPAL CON LOS DATOS DEL PAGO
 	public function getPaymentStatus(){
-		// Get the payment ID before session clear
+		// Coge el id del pago antes de limpiar la session
        // $payment_id = Session::get('paypal_payment_id');
         $payment_id = $_GET['paymentId'];
  
-		// clear the session payment ID
+		// Limpia el id pago de la session
 		\Session::forget('paypal_payment_id');
  
 		$payerId = Input::get('PayerID');
@@ -152,12 +154,14 @@ class PaypalController extends BaseController{
 		$execution = new PaymentExecution();
 		$execution->setPayerId(Input::get('PayerID'));
  
+		//Ejecuta el pago, aqui finaliza el proceso
 		$result = $payment->execute($execution, $this->_api_context);
  
  
+		//Si el estado del pago se ha aprobado, redirecciona a la pagina que quieras.
 		if ($result->getState() == 'approved') {
  
-			
+			//Metodo para crear el pedido en la base de datos, enviar email etc
             $this->crearPedido();
 			
  
@@ -168,7 +172,7 @@ class PaypalController extends BaseController{
 			    ->with('message', 'La compra fue cancelada');
 	}
  
-
+//Este metodo estaba antes en el controladorPedido
     public function crearPedido(){
         $fecha = date("d-m-Y");
         $total = Cart::subtotal();
@@ -184,7 +188,8 @@ class PaypalController extends BaseController{
         $arrayDatos = [
             "direccion" => $dato['direccion'],
             "nombre_user" => $nombreUser, 
-            "email_user" => $emailUser,
+			"email_user" => $emailUser,
+			"dni"=>$dato['dni'],
             "total" => $total,
             "estado"=>0,
             "contenidoCarrito" => Cart::content()
@@ -202,9 +207,9 @@ class PaypalController extends BaseController{
             
             });
        
-        //inserta los datos del pedido en la tabla pedidos
+        //inserta los datos del pedido en la tabla pedidos  
         
-        $pedido = Pedidos::create(["user_id" =>$idUser, "fecha_realizacion" =>$fecha, "direccion" =>$direccion, "codigo" =>$cp, "nombre_user" => $nombreUser, "email_user" =>$emailUser ]);
+        $pedido = Pedidos::create(["user_id" =>$idUser, "fecha_realizacion" =>$fecha, "direccion" =>$arrayDatos['direccion'], "codigo" =>$cp, "nombre_user" => $nombreUser, "email_user" =>$emailUser ]);
        
         /*coge el id del ultimo pedido insertado, saca los datos de cada item del carrito y los inserta
         en la tabla pedido_has_producto*/

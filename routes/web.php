@@ -65,7 +65,8 @@ Route::get('/verPedidos', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser
 Route::get('/vistaEditar',['middleware'=>'auth', 'uses' => 'controladorPerfilUser@editarForm'])->name('vistaEditar');
 Route::post('/facturaPdf', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@facturaPDF'])->name('facturaPdf');
 Route::post('/cambioClave', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@cambioClave'])->name('cambioClave');
-Route::get('/darDeBaja', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@darBaja'])->name('darDeBaja');
+Route::post('/darDeBaja', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@darBaja'])->name('darDeBaja');
+Route::get('confirmacionBaja', 'controladorPerfilUser@confirmacionBaja')->name('confirmacionBaja');
 
 //CONVERSION XML
 

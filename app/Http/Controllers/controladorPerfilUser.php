@@ -10,7 +10,7 @@ use Cart;
 use Mail;
 use Barryvdh\DomPDF\Facade as PDF;
 use XML;
-
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +23,7 @@ class controladorPerfilUser extends Controller
     $numeroPedidos = Pedidos::where('user_id', $id)->count();
     //$datosUsuario = User::where('id', $id)->get();
    
+
     return view('perfilUsuario',  ['tablaCategorias' => $tablaCategorias,
     'numeroPedidos' => $numeroPedidos]);
   }
@@ -47,7 +48,7 @@ public function editarDatos(Request $res){
   'nombreApellidos' =>$res->nombreApellidosCambiar, 'direccion'=>$res->direccionCambiar,
   'dni'=>$res->dniCambiar]);
 
-  return redirect('/verPerfil');
+  return redirect('/verPerfil')->with('message', 'Se han editado los datos correctamente');
 }
 
 
@@ -65,15 +66,28 @@ public function verPedidos(){
 //Muestra la factura de un pedido en PDF en el navegador
 public function facturaPDF(Request $res){
   $idPedido = $res->pedidoId;
-  $pedido = PedidoProducto::where('pedido_id', $idPedido)->get();
+  //$pedido = PedidoProducto::where('pedido_id', $idPedido)->get();
 
-  foreach($pedido as $ped){
-  $data = [
-    'cantidad' => $ped['cantidad'],
-  ];
+  $pedido = DB::table('pedido')
+            ->where('id_pedido', $idPedido)
+            ->join('pedido_has_productos', 'pedido_has_productos.pedido_id', 'pedido.id_pedido')
+            ->join('productos', 'productos.id_producto', 'pedido_has_productos.productos_id')
+            ->select('pedido_has_productos.*', 'pedido.*', 'productos.nombre')
+            ->get();
+    //dd($pedido);
+          
+foreach($pedido as $p){
+    $data=[
+      'nombreUs'=> $p->nombre_user,
+      'emailUs' => $p->email_user,
+      'dir'=> $p->direccion,
+      'fechaRe'=> $p->fecha_realizacion,
+      'numPed' =>$p->id_pedido,
+    
+    ];
+}
 
-  }
-  return PDF::loadView('facturaPdf', $data)
+  return PDF::loadView('facturaPdf', $data, ['pedido'=>$pedido])
     ->stream('Factura_simplificada.pdf');
 }
 
@@ -115,7 +129,14 @@ public function cambioClave(Request $res){
 
   $clave=bcrypt($res->nuevaClave);
   $usuario = User::find($id)->update(['password' =>$clave]);
-  return redirect('/verPerfil');
+  return redirect('/verPerfil')->with('message', 'La clave se ha cambiado correctamente');
+}
+
+
+public function confirmacionBaja(){
+  $tablaCategorias = Categoria::get();
+
+  return view('confirmacionBaja', ['tablaCategorias' => $tablaCategorias]);
 }
 //----
 }

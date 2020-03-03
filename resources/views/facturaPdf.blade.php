@@ -70,14 +70,33 @@
 <main>
 
     <span class="letrasColor"><strong><h3>Factura simplificada</h3></strong></span><br><br><br>
-   
+<span>Pedido numero: {{$numPed}}</span><br>
+<span>Fecha de realización: {{$fechaRe}}</span><br><br>
 
-    
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>PVP</th>
+            <th>Cantidad</th>
+        </tr>
+
+        <tbody>
+          @foreach($pedido as $ped)
+            <tr>
+                <td>{{$ped->nombre}}</td>
+                <td>{{$ped->precio}}</td>
+                <td>{{$ped->cantidad}}</td>
+            </tr>
+     @endforeach
+        </tbody>
+    </table><br>
+
+<span>Nombre: {{$nombreUs}}</span><br>
+<span>Email: {{$emailUs}}</span><br>
+<span>Dirección: {{$dir}}</span><br>
 
     <div>
-        
-        <span class="letrasColor">Cantidad:</span><span> {{$cantidad }} </span><br>
-
+        Información de la empresa: XXXXXXX
     </div>
 </main>
 
