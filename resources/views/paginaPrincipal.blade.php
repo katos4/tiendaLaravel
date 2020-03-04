@@ -35,7 +35,7 @@
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{asset($producto -> imagenProducto)}}" alt="Card image cap">
                 <div class="card-body text-center">
-                    <p class="card-text"><strong>{{ $producto -> nombre }}</strong></p>
+                    <p class="card-text"><strong>{{ $producto -> nombre }} <span class="badge badge-secondary">NUEVO!</span></strong></p>
                     <p class="card-text">{{ $producto -> precio }}</p>
                 </div>
             </div>
@@ -43,6 +43,5 @@
           @endforeach
 
     </div>
-
 
   @endsection

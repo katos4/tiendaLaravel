@@ -9,13 +9,21 @@ use App\User;
 use Cart;
 use Mail;
 use Barryvdh\DomPDF\Facade as PDF;
-use XML;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
 class controladorPerfilUser extends Controller
 {
+
+  protected function localizacion(){
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'http://ip-api.com/json/?lang=es&fields=city,country');
+    $localizacion = json_decode($response->getBody());
+    return $localizacion;
+}
+
+
   //Muestra el perfil del usuario
   public function verPerfil(){
     $tablaCategorias = Categoria::get();
@@ -25,7 +33,7 @@ class controladorPerfilUser extends Controller
    
 
     return view('perfilUsuario',  ['tablaCategorias' => $tablaCategorias,
-    'numeroPedidos' => $numeroPedidos]);
+    'numeroPedidos' => $numeroPedidos, 'localizacion'=>$this->localizacion()]);
   }
 
 
@@ -35,7 +43,7 @@ public function editarForm(){
   $tablaCategorias = Categoria::get();
   $id = Auth()->id();
   $datosUsuario = User::where('id', $id)->get();
-  return view('/editarForm', ['tablaCategorias' => $tablaCategorias,'datosUsuario'=>$datosUsuario]);
+  return view('/editarForm', ['tablaCategorias' => $tablaCategorias,'datosUsuario'=>$datosUsuario, 'localizacion'=>$this->localizacion()]);
 }
 
 
@@ -58,7 +66,7 @@ public function verPedidos(){
   $tablaCategorias = Categoria::get();
   $id = Auth()->id();
   $pedido = Pedidos::where('user_id', $id)->get();
-  return view('verPedidos',  ['tablaCategorias' => $tablaCategorias, 'pedido'=>$pedido]);
+  return view('verPedidos',  ['tablaCategorias' => $tablaCategorias, 'pedido'=>$pedido, 'localizacion'=>$this->localizacion()]);
 }
 
 
@@ -109,16 +117,24 @@ public function darBaja(Request $res){
 
 
 
-public function exportarPedidos(){
+public function exportarProductos(){
 
-  //$user=User::all();
+  /*$productos = Producto::where('Status', '=', 'ON')
+    ->orderBy('updated_at', 'asc'); //->get() here brings an error.*/
 
-  $xml = XML::exportView('vista', ['table'])
-    ->toFile("file.xml");
+    $productos = Producto::all();
 
-     // dd($xml);
-
-     return back();
+    foreach ($productos as $p) {
+      $data=[
+        'nombre'=>$p['nombre'],
+      ];
+    }
+    $xml = new \SimpleXMLElement('');
+    array_walk_recursive($data, array ($xml,'addChild'));
+   // print $xml->asXML();
+  //dd($xml);
+return Redirect::route('/');
+   
 }
 
 
@@ -136,7 +152,7 @@ public function cambioClave(Request $res){
 public function confirmacionBaja(){
   $tablaCategorias = Categoria::get();
 
-  return view('confirmacionBaja', ['tablaCategorias' => $tablaCategorias]);
+  return view('confirmacionBaja', ['tablaCategorias' => $tablaCategorias, 'localizacion'=>$this->localizacion()]);
 }
 //----
 }

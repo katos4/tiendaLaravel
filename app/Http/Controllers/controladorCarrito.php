@@ -10,11 +10,17 @@ use Illuminate\Http\Request;
 class controladorCarrito extends Controller
 {
 
+    protected function localizacion(){
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', 'http://ip-api.com/json/?lang=es&fields=city,country');
+        $localizacion = json_decode($response->getBody());
+        return $localizacion;
+    }
 
     public function verCarrito(){
        
         $tablaCategorias = Categoria::get();
-        return view('carrito', ['tablaCategorias' => $tablaCategorias ]);
+        return view('carrito', ['tablaCategorias' => $tablaCategorias, 'localizacion'=>$this->localizacion() ]);
     }
 
 
@@ -31,7 +37,7 @@ class controladorCarrito extends Controller
         ]);
 
         $tablaCategorias = Categoria::get();
-        return view('carrito', ['tablaCategorias' => $tablaCategorias]);
+        return view('carrito', ['tablaCategorias' => $tablaCategorias, 'localizacion'=>$this->localizacion()]);
        
     }
 
@@ -71,7 +77,7 @@ public function showFacturacion(){
 
     $tablaCategorias = Categoria::get();
     
-    return view('/facturacion',  ['tablaCategorias' => $tablaCategorias]);
+    return view('/facturacion',  ['tablaCategorias' => $tablaCategorias, 'localizacion'=>$this->localizacion()]);
 }
 
 
