@@ -17,6 +17,11 @@ class controladorCarrito extends Controller
         return $localizacion;
     }
 
+    /**
+     * Devuelve la vista del carrito
+     *
+     * @return void
+     */
     public function verCarrito(){
        
         $tablaCategorias = Categoria::get();
@@ -24,7 +29,12 @@ class controladorCarrito extends Controller
     }
 
 
-
+/**
+ * Añade los productos al carrito
+ *
+ * @param Request $res
+ * @return void
+ */
     public function addToCart(Request $res){
         $detalles = Producto::find($res->id);
 
@@ -42,7 +52,12 @@ class controladorCarrito extends Controller
     }
 
 
-//ELIMINAR
+/**
+ * Elimina un producto del carrito
+ *
+ * @param [type] $id
+ * @return void
+ */
     public function removeFromCart($id){
        // $detalles = Producto::find($id);
         $cart = Cart::content()->where('rowId',$id);
@@ -53,14 +68,23 @@ class controladorCarrito extends Controller
     }
 
 
-//ACTUALIZAR
+/**
+ * Actualiza la cantidad de un determinado producto en el carrito
+ *
+ * @param Request $res
+ * @return void
+ */
     public function update(Request $res){
         Cart::update($res->id, $res->cantidad);
         return back();
     }
 
-//VACIAR CARRITO
 
+/**
+ * Vacia el carrito completo
+ *
+ * @return void
+ */
     public function vaciar(){
         Cart::destroy();
 
@@ -69,8 +93,12 @@ class controladorCarrito extends Controller
 
 
 
-//MOSTRAR FORMULARIO FACTURACION
 
+/**
+ * Devuelve la vista de facturacion, en la cual se muestra el resumen del pedido y el boton de pagar
+ *
+ * @return void
+ */
 public function showFacturacion(){
 
     //dd(Cart::content());

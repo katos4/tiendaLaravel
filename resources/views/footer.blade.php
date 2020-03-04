@@ -34,17 +34,8 @@ footer {
       </dl>
       </div>
 
-      <div class="col-md-2">
-        <dl>
-          <dd><a class="footer-link" href="">Quienes somos</a></dd>
-          <dd><a href="">Condiciones de compra</a></dd>
-        </dl>
-      </div>
-      <div class="col-md-2">
-        <dl>
-          <dd><a class="footer-link" href="">Aviso legal</a></dd>
-          <dd><a href="">Garantías</a></dd>
-        </dl>
+      <div class="col-md-4">
+       
       </div>
 
       <div class="col-md-4">

@@ -27,7 +27,7 @@
                             
                                         <div class="row">
                                                 <div class="col-lg-4">
-                                                    <input class="form-control" type="number" value="{{$item->qty}}" id="cantidad" name="cantidad">
+                                                    <input class="form-control" type="number" value="{{$item->qty}}" id="cantidad" name="cantidad" min="1">
                                                 
                                                 </div>
                                                 <div class="col-lg-2" >

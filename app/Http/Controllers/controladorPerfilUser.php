@@ -15,7 +15,11 @@ use Illuminate\Http\Request;
 
 class controladorPerfilUser extends Controller
 {
-
+/**
+ * Muestra en la pagina el sitio desde donde se conecta el usuario, este metodo se repite en todos los controladores
+ *
+ * @return void
+ */
   protected function localizacion(){
     $client = new \GuzzleHttp\Client();
     $response = $client->request('GET', 'http://ip-api.com/json/?lang=es&fields=city,country');
@@ -24,7 +28,11 @@ class controladorPerfilUser extends Controller
 }
 
 
-  //Muestra el perfil del usuario
+  /**
+   * Muestra la vista del perfil del usuario
+   *
+   * @return void
+   */
   public function verPerfil(){
     $tablaCategorias = Categoria::get();
     $id = Auth()->id();
@@ -38,7 +46,11 @@ class controladorPerfilUser extends Controller
 
 
 
-  //Muestra formulario para editar los datos del usuario
+ /**
+  * Muestra un formulario donde el usuario puede editar sus datos
+  *
+  * @return void
+  */
 public function editarForm(){
   $tablaCategorias = Categoria::get();
   $id = Auth()->id();
@@ -48,7 +60,12 @@ public function editarForm(){
 
 
 
-//Actualiza los datos editados del usuario
+/**
+ * Actualiza los datos del formulario que el usuario ha introducido previamente
+ *
+ * @param Request $res
+ * @return void
+ */
 public function editarDatos(Request $res){
   $id = Auth()->id();
 
@@ -61,7 +78,11 @@ public function editarDatos(Request $res){
 
 
 
-//Muestra los pedidos del usuario
+/**
+ * Muestra los pedidos que ha hecho el usuario
+ *
+ * @return void
+ */
 public function verPedidos(){
   $tablaCategorias = Categoria::get();
   $id = Auth()->id();
@@ -71,7 +92,12 @@ public function verPedidos(){
 
 
 
-//Muestra la factura de un pedido en PDF en el navegador
+/**
+ * Muestra una factura en pdf del pedido seleccionado en el perfil del usuario
+ *
+ * @param Request $res
+ * @return void
+ */
 public function facturaPDF(Request $res){
   $idPedido = $res->pedidoId;
   //$pedido = PedidoProducto::where('pedido_id', $idPedido)->get();
@@ -91,7 +117,7 @@ foreach($pedido as $p){
       'dir'=> $p->direccion,
       'fechaRe'=> $p->fecha_realizacion,
       'numPed' =>$p->id_pedido,
-    
+      'totalPagado'=>$p->totalPagado,
     ];
 }
 
@@ -101,7 +127,12 @@ foreach($pedido as $p){
 
 
 
-//Cancela la cuenta de un usuario
+/**
+ * Cancela la cuenta de un usuario
+ *
+ * @param Request $res
+ * @return void
+ */
 public function darBaja(Request $res){
   $id = Auth()->user()->id;
   $user = User::find($id);
@@ -116,7 +147,11 @@ public function darBaja(Request $res){
 
 
 
-
+/**
+ * Exporta las tablas de la base de datos en formato XML (este metodo no funciona)
+ *
+ * @return void
+ */
 public function exportarProductos(){
 
   /*$productos = Producto::where('Status', '=', 'ON')
@@ -139,7 +174,12 @@ return Redirect::route('/');
 
 
 
-//Cambia la contraseña del usuario
+/**
+ * Cambia la contraseña del usuario
+ *
+ * @param Request $res
+ * @return void
+ */
 public function cambioClave(Request $res){
   $id = $res->id;
 
@@ -148,7 +188,11 @@ public function cambioClave(Request $res){
   return redirect('/verPerfil')->with('message', 'La clave se ha cambiado correctamente');
 }
 
-
+/**
+ * Muestra un formulario de confirmacion antes de dar de baja la cuenta del usuario
+ *
+ * @return void
+ */
 public function confirmacionBaja(){
   $tablaCategorias = Categoria::get();
 

@@ -16,7 +16,11 @@ class controladorProductos extends Controller
     }
     
     
-    //mostrar los productos destacados 
+   /**
+    * Muestra la pagina principal del sitio con el slider y los productos destacados
+    *
+    * @return void
+    */
     public function mostrarMenuyDestacados(){
         $productosDes = Producto::where('anuncio','1')->get();
         $tablaCategorias = Categoria::get();
@@ -31,7 +35,12 @@ class controladorProductos extends Controller
         
     }
 
- 
+ /**
+  * Muestra los diferentes productos segun la categoria seleccionada
+  *
+  * @param [type] $categoria
+  * @return void
+  */
     public function menuHealthy($categoria){
         $productosH = Producto::where('categorias_id',$categoria)->paginate(8);
         $tablaCategorias = Categoria::get();
@@ -40,7 +49,12 @@ class controladorProductos extends Controller
             'tablaCategorias' => $tablaCategorias, 'localizacion'=>$this->localizacion()
         ]);
     }
-
+/**
+ * Muestra los detalles de un producto cuando se selecciona
+ *
+ * @param [type] $idProducto
+ * @return void
+ */
    public function mostrarDetalles($idProducto){
        $detalles = Producto::where('id_producto',$idProducto)->get();
        $tablaCategorias = Categoria::get();

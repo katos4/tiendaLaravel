@@ -1,14 +1,20 @@
 <?php
 
-//devuelve la vista principal
+/**
+ * Ruta para la vista principal
+ */
 Route::get('/','controladorProductos@mostrarMenuyDestacados' ,function(){
     return view('master');
 });
 
-//devuelve la tabla de productos dependiendo de la categoria que se seleccione en el menu
+/**
+ * Ruta para devolver los productos mostrados segun categoria
+ */
 Route::get('/productosMostrados/{categoria}','controladorProductos@menuHealthy');
 
-//devuelve una pagina con los detalles de producto
+/**
+ * Rutas para la vista de detalles del producto
+ */
 Route::get('/detallesProducto/{idProducto}', 'controladorProductos@mostrarDetalles');
 Route::get('detallesProducto', function(){
     return view('detallesProducto');
@@ -17,7 +23,9 @@ Route::get('detallesProducto', function(){
 
 
 
-//Carrito de la compra
+/**
+ * Rutas del carrito de la compra
+ */
 Route::get('/carrito', 'controladorCarrito@verCarrito')->name('carrito');
 Route::post('/carrito', 'controladorCarrito@addToCart')->name('cart.add');
 Route::delete('/carrito/{id}','controladorCarrito@removeFromCart')->name('cart.remove');
@@ -49,16 +57,20 @@ Route::get('/seguirComprando', function(){
  Route::get('/home', 'HomeController@index')->name('home');
 
 
-//FACTURACION
 
+/**
+ * Rutas facturacion
+ */
 Route::post('/facturacion', 'controladorCarrito@showFacturacion')->name('mostrarFacturacion');
 //Route::post('/crearPedido', 'controladorPedidos@crearPedido')->name('crearPedido');
 Route::post('/pedidoRealizado', 'controladorPedidos@pedidoRealizado')->name('pedidoRealizado');
 Route::post('/aceptar', 'controladorPedidos@aceptar')->name('aceptar');
 Route::post('cancelarPedido', 'controladorPedidos@cancelarPedido')->name('cancelarPedido');
 
-//PERFIL DEL USUARIO
 
+/**
+ * Rutas pertenecientes al perfil del usuario
+ */
 Route::get('/verPerfil', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@verPerfil'])->name('verPerfil');
 Route::post('/editarDatos',['middleware'=>'auth', 'uses' => 'controladorPerfilUser@editarDatos'])->name('editarDatos');
 Route::get('/verPedidos', ['middleware'=>'auth', 'uses' =>'controladorPerfilUser@verPedidos'])->name('verPedidos');
@@ -74,8 +86,10 @@ Route::post('/vista', 'controladorPerfilUser@exportarPedidos')->name('verXML');
 Route::get('/exportarProductos', 'controladorPerfilUser@exportarProductos')->name('exportarProductos');
 
 
-//PAGOS CON PAYPAL
 
+/**
+ * Rutas pertenecientes al pago con PayPal
+ */
 Route::get('payment', array(
     'as' => 'payment',
     'uses' => 'PaypalController@postPayment',

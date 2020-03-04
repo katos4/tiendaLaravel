@@ -70,7 +70,12 @@ class controladorPedidos extends Controller
         return redirect('/');
     }*/
 
-   
+   /**
+    * Cambia el estado de un producto a cancelado
+    *
+    * @param Request $res
+    * @return void
+    */
 public function cancelarPedido(Request $res){
 
   $pedido = Pedidos::where('id_pedido', $res->pedidoId)->update(['estado'=>2]);

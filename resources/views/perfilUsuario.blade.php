@@ -5,7 +5,7 @@
 <div class="row mt-4">
 
   <div class="col-lg-3 mt-3" >
-    <div class="card border-success" style="height: 300px;">
+    <div class="card border-success">
       <div class="card-header" style="background-color: #ccff99;">
         <h5>Opciones de cuenta</h5>
         
@@ -14,7 +14,6 @@
           <ul class="list-group list-group-flush">
             <a href="{{ route('verPedidos') }}" class="list-group-item list-group-item-action">Ver mis pedidos</a>
             <a href="{{ route('vistaEditar') }}" class="list-group-item list-group-item-action">Editar mis datos</a>
-            <a href="{{route('exportarProductos')}}" class="list-group-item list-group-item-action">Exportar en XML</a>
             <a href="{{route('confirmacionBaja')}}" class="list-group-item list-group-item-action">Dar de baja</a>
             
             
@@ -25,7 +24,7 @@
   </div>
   
     <div class="col-lg-8 mt-3" >
-      <div class="card text-center border-success" style="height: 300px;">
+      <div class="card text-center border-success">
         <div class="card-header" style="background-color: #ccff99;">
           <h2>Mi Cuenta</h2>
          

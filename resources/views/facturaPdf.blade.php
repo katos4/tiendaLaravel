@@ -17,7 +17,6 @@
             right: 0cm;
             height: 2cm;
             background-color:#ccff99;
-            color: white;
             text-align: center;
             line-height: 30px;
            
@@ -64,13 +63,13 @@
 <body>
 
 <header> 
-
+    <span class="letrasColor">My Totem</span>
 </header>
 
 <main>
 
     <span class="letrasColor"><strong><h3>Factura simplificada</h3></strong></span><br><br><br>
-<span>Pedido numero: {{$numPed}}</span><br>
+<span>Número pedido: {{$numPed}}</span><br>
 <span>Fecha de realización: {{$fechaRe}}</span><br><br>
 
     <table>
@@ -90,13 +89,18 @@
      @endforeach
         </tbody>
     </table><br>
+<span><b>Total:</b>{{$totalPagado}}</span><br><br>
+
 
 <span>Nombre: {{$nombreUs}}</span><br>
 <span>Email: {{$emailUs}}</span><br>
-<span>Dirección: {{$dir}}</span><br>
+<span>Dirección: {{$dir}}</span><br><br><br>
 
     <div>
-        Información de la empresa: XXXXXXX
+        <span>My Totem</span><br>
+        <span>NIF: XXXXXXXXX</span><br>
+        <span>Polígono La Luz, nave 2, 21007</span><br>
+        <span>Huelva (España)</span>
     </div>
 </main>
 

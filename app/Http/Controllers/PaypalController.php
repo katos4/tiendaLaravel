@@ -45,7 +45,11 @@ class PaypalController extends BaseController{
 		$this->_api_context->setConfig($paypal_conf['settings']);
 	}
  
-	//ENVIA LOS DATOS DE PAGO A LA PAGINA DE PAYPAL
+	/**
+	 * Envia a PayPal los datos del pago y del pedido
+	 *
+	 * @return void
+	 */
 	public function postPayment(){
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');
@@ -132,7 +136,11 @@ class PaypalController extends BaseController{
 	}
  
 
-	//RECIBE LA RESPUESTA DE PAYPAL CON LOS DATOS DEL PAGO
+	/**
+	 * Recibe la respuesta de PayPal con los datos del pago
+	 *
+	 * @return void
+	 */
 	public function getPaymentStatus(){
 		// Coge el id del pago antes de limpiar la session
        // $payment_id = Session::get('paypal_payment_id');
@@ -172,17 +180,26 @@ class PaypalController extends BaseController{
 			    ->with('message', 'La compra fue cancelada');
 	}
  
-//Este metodo estaba antes en el controladorPedido
+/**
+ * Crea un pedido nuevo el cual se inserta en la base de datos, se envia un email al usuario con el resumen
+ * del pedido, se adjunta al ese email un pdf donde tambien se muestra el resumen del pedido y finalmente
+ * se vacia el carrito
+ * 
+ *
+ * @return void
+ */
     public function crearPedido(){
         $fecha = date("d-m-Y");
-        $total = Cart::subtotal();
+		$total = Cart::subtotal()+3;
         $idUser = Auth()->user()->id;
         $nombreUser = Auth()->user()->name;
         $emailUser = Auth()->user()->email;
-        $direccion='calle de prueba';
+      //  $direccion='calle de prueba';
         $cp='21003';
         $tablaCategorias = Categoria::get();
         $datosUser=User::where('id',$idUser)->get();
+
+		//dd($total);
 
         foreach($datosUser as $dato){
         $arrayDatos = [
@@ -195,25 +212,29 @@ class PaypalController extends BaseController{
             "contenidoCarrito" => Cart::content()
         ];
     }
-
         //envia email y adjunta PDF
           $pdf = PDF::loadView('mail', $arrayDatos);
 
-          Mail::send('mail', $arrayDatos, function($message) use ($pdf) {
+		  
+          Mail::send('mail', $arrayDatos, function($message) use ($pdf, $emailUser) {
             $message->from('gregfdez077@gmail.com','Resumen del pedido');
-            $message->to('gregoharriero@gmail.com', 'Grego')
+            $message->to($emailUser, 'MyTotem')
                     ->subject('Factura pedido MyTotem');
             $message -> attachData($pdf->output(), 'Resumen_Pedido.pdf');
             
             });
-       
+		
         //inserta los datos del pedido en la tabla pedidos  
         
         $pedido = Pedidos::create(["user_id" =>$idUser, "fecha_realizacion" =>$fecha, "direccion" =>$arrayDatos['direccion'], "codigo" =>$cp, "nombre_user" => $nombreUser, "email_user" =>$emailUser ]);
-       
+	  //dd($total);
+	   	$id=$pedido->id;
+	  	$pedido=Pedidos::where('id_pedido', $id)->update(['totalPagado'=> $total]);
+		
+
         /*coge el id del ultimo pedido insertado, saca los datos de cada item del carrito y los inserta
         en la tabla pedido_has_producto*/
-        $id=$pedido->id; 
+        
   
         foreach(Cart::content() as $item){
            
